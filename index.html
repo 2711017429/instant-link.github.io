@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上“暗”电竞-护航服务</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #0a192f;
+            color: #e6f1ff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #0071e3, #00a2ff);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 113, 227, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(0, 113, 227, 0.4);
+        }
+        
+        /* 导航栏样式 */
+        header {
+            background-color: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-img {
+            height: 50px;
+            width: auto;
+        }
+        
+        .logo-text {
+            font-size: 28px;
+            font-weight: 800;
+            color: #00a2ff;
+            text-shadow: 0 0 10px rgba(0, 162, 255, 0.5);
+        }
+        
+        .logo-text span {
+            color: #e6f1ff;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 35px;
+        }
+        
+        .nav-links a {
+            color: #ccd6f6;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: #00a2ff;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: #00a2ff;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* 英雄区域样式 */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(10, 25, 47, 0.9), rgba(5, 15, 30, 0.95));
+            padding-top: 80px;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=3840') no-repeat center center/cover;
+            opacity: 0.15;
+            z-index: -1;
+        }
+        
+        .hero-content {
+            max-width: 700px;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 64px;
+            margin-bottom: 20px;
+            color: #e6f1ff;
+        }
+        
+        .hero h1 span {
+            color: #00a2ff;
+            text-shadow: 0 0 15px rgba(0, 162, 255, 0.7);
+        }
+        
+        .hero p {
+            font-size: 22px;
+            margin-bottom: 40px;
+            color: #a8b2d1;
+            max-width: 600px;
+        }
+        
+        /* 轮播图样式 */
+        .carousel-section {
+            background-color: #0a192f;
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 42px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, #0071e3, #00a2ff);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        .carousel-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 600px;
+        }
+        
+        .carousel-item {
+            min-width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .carousel-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+        
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .carousel-dot.active {
+            background: #00a2ff;
+        }
+        
+        /* 服务区域样式 */
+        .services {
+            background: linear-gradient(135deg, #0a192f, #0d1b35);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .services::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=3840') no-repeat center center/cover;
+            opacity: 0.05;
+            z-index: 0;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .service-card {
+            background: rgba(20, 40, 70, 0.6);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 162, 255, 0.1);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            background: rgba(25, 50, 85, 0.7);
+            border-color: rgba(0, 162, 255, 0.3);
+        }
+        
+        .service-icon {
+            font-size: 50px;
+            color: #00a2ff;
+            margin-bottom: 20px;
+        }
+        
+        .service-card h3 {
+            font-size: 26px;
+            margin-bottom: 15px;
+        }
+        
+        .service-card p {
+            color: #a8b2d1;
+            font-size: 18px;
+        }
+        
+        /* 排队系统样式 */
+        .queue-section {
+            background: linear-gradient(135deg, #0d1b35, #0a192f);
+            text-align: center;
+        }
+        
+        .queue-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(20, 40, 70, 0.6);
+            border-radius: 20px;
+            padding: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 162, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+        }
+        
+        .queue-container h3 {
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #00a2ff;
+        }
+        
+        .queue-container p {
+            font-size: 18px;
+            color: #a8b2d1;
+            margin-bottom: 40px;
+        }
+        
+        /* 弹窗样式 */
+         .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 15, 30, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .modal-content {
+            background: rgba(20, 40, 70, 0.9);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            padding: 40px;
+            position: relative;
+            border: 1px solid rgba(0, 162, 255, 0.3);
+            box-shadow: 0 25px 50px -12px rgba(0, 113, 227, 0.3);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 28px;
+            color: #a8b2d1;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            color: #00a2ff;
+        }
+        
+        .modal-title {
+            font-size: 28px;
+            margin-bottom: 25px;
+            color: #00a2ff;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 18px;
+            color: #ccd6f6;
+            text-align: left;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 162, 255, 0.2);
+            background: rgba(10, 25, 47, 0.6);
+            color: #e6f1ff;
+            font-size: 16px;
+            transition: border 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border: 1px solid #00a2ff;
+        }
+        
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .option-btn {
+            background: rgba(10, 25, 47, 0.6);
+            border: 1px solid rgba(0, 162, 255, 0.2);
+            padding: 15px 30px;
+            border-radius: 10px;
+            color: #ccd6f6;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .option-btn:hover, .option-btn.active {
+            background: rgba(0, 162, 255, 0.2);
+            border-color: #00a2ff;
+            color: #00a2ff;
+        }
+        
+        /* 底部样式 */
+        footer {
+            background: #050f1e;
+            padding: 60px 0 30px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h4 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #00a2ff;
+        }
+        
+        .footer-column p, .footer-column a {
+            color: #8892b0;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-column a:hover {
+            color: #00a2ff;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(0, 162, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #00a2ff;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background: #00a2ff;
+            color: white;
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            padding-top: 30px;
+            border-top: 1px solid rgba(0, 162, 255, 0.1);
+            color: #8892b0;
+            font-size: 16px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 48px;
+            }
+            
+            .hero p {
+                font-size: 20px;
+            }
+            
+            .carousel {
+                height: 450px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 40px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .carousel {
+                height: 350px;
+            }
+            
+            .service-card {
+                padding: 30px 20px;
+            }
+            
+            .queue-container {
+                padding: 30px 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .btn {
+                padding: 12px 25px;
+                font-size: 16px;
+            }
+            
+            .carousel {
+                height: 250px;
+            }
+            
+            .options {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+        <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <!-- 替换为您的logo.png -->
+                    <img src="https://via.placeholder.com/50x50/0071e3/ffffff?text=DT" alt="暗区电竞" class="logo-img">
+                    <div class="logo-text">暗<span>电竞</span></div>
+                </div>
+                <div class="nav-links">
+                    <a href="#home">首页</a>
+                    <a href="#carousel">护航展示</a>
+                    <a href="#services">服务</a>
+                    <a href="#queue">排队考核</a>
+                    <a href="#contact">联系我们</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>专业<span>暗区突围</span>护航服务</h1>
+                <p>暗区护航，安全撤离，提升您的游戏体验。加入我们的护航队伍，享受优良的暗区服务。</p>
+                <a href="#queue" class="btn">立即排队考核</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 轮播图区域 -->
+    <section class="carousel-section" id="carousel">
+        <div class="container">
+            <div class="section-title">
+                <h2>护航展示</h2>
+            </div>
+            <div class="carousel-container">
+                <div class="carousel">
+                    <!-- 替换为您的实际图片路径 -->
+                    <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=3840');"></div>
+                    <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1542751110-97427bbecf20?q=80&w=3840');"></div>
+                    <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=3840');"></div>
+                </div>
+                <div class="carousel-nav">
+                    <div class="carousel-dot active" data-index="0"></div>
+                    <div class="carousel-dot" data-index="1"></div>
+                    <div class="carousel-dot" data-index="2"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 服务区域 -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>我们的服务</h2>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>单护服务</h3>
+                    <p>一位经过严格考核的打手保护您安全撤离并且结单</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>双护服务</h3>
+                    <p>两位经严格考核的打手全程保护，携带高价值物品带您撤离</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h3>高级VIP护航</h3>
+                    <p>有三位经严格考核的打手，携带高价值物品撤离</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 排队系统 -->
+    <section class="queue-section" id="queue">
+        <div class="container">
+            <div class="section-title">
+                <h2>排队考核系统</h2>
+            </div>
+            <div class="queue-container">
+                <h3>加入专业护航队伍</h3>
+                <p>通过考核后，您将加入我们的俱乐部，为老板提供高质量的护航服务</p>
+                <button class="btn" id="joinQueueBtn">排队进入考核</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 弹窗：选择护航类型 -->
+    <div class="modal" id="guardTypeModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3 class="modal-title">选择护航类型</h3>
+            <p style="text-align: center; margin-bottom: 30px; color: #a8b2d1;">请选择您要申请的护航类型</p>
+            <div class="options">
+                <div class="option-btn" data-type="single">单护</div>
+                <div class="option-btn" data-type="double">双护</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 弹窗：填写信息 -->
+    <div class="modal" id="infoModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3 class="modal-title">填写报名信息</h3>
+            <div class="form-group">
+                <label for="gameName">游戏昵称</label>
+                <input type="text" id="gameName" placeholder="请输入您的游戏昵称">
+            </div>
+            <div class="form-group">
+                <label for="gameId">游戏编号</label>
+                <input type="text" id="gameId" placeholder="请输入您的游戏编号">
+            </div>
+            <button class="btn" id="submitBtn" style="width: 100%;">报名排队</button>
+        </div>
+    </div>
+
+    <!-- 弹窗：排队成功 -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3 class="modal-title">排队成功！</h3>
+            <div class="form-group">
+                <p style="text-align: center; font-size: 20px; margin: 20px 0;">您的排队编号是：<span id="queueNumber" style="color: #00a2ff; font-weight: bold;">#DT20230804567</span></p>
+                <p style="text-align: center; color: #a8b2d1; margin-bottom: 30px;">请保存此编号，考核将按排队顺序进行</p>
+            </div>
+            <div class="form-group">
+                <h4 style="text-align: center; margin-bottom: 15px; color: #00a2ff;">考核群二维码</h4>
+                <!-- 替换为实际的考核群二维码 -->
+                <div style="background: #0a192f; padding: 20px; border-radius: 10px; display: flex; justify-content: center;">
+                    <div style="width: 180px; height: 180px; background: #f5f5f7; display: flex; align-items: center; justify-content: center; border-radius: 10px;">
+                        <span style="color: #0a192f; font-size: 14px;">考核群二维码</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <h4 style="text-align: center; margin: 20px 0 15px; color: #00a2ff;">注意事项</h4>
+                <ul style="color: #a8b2d1; padding-left: 20px; text-align: left;">
+                    <li>请保持在线状态，考核前30分钟会通知您</li>
+                    <li>考核时需要准备齐全装备</li>
+                    <li>考核过程中请听从考官指示</li>
+                    <li>考核未通过需重新排队(每人一日两次机会，未完成考核标准均为无效成绩)</li>
+                    <li>有任何问题请联系客服</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部区域 -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>关于上“暗”电竞</h4>
+                    <p>暗区突围护航服务平台，提供安全高效的撤离服务</p>
+                </div>
+                <div class="footer-column">
+                    <h4>快速链接</h4>
+                    <a href="#home">首页</a>
+                    <a href="#carousel">护航展示</a>
+                    <a href="#services">服务项目</a>
+                    <a href="#queue">排队考核</a>
+                </div>
+                <div class="footer-column">
+                    <h4>联系方式</h4>
+                    <p>客服微信：darkzone_support</p>
+                    <p>邮箱：2711017429@qq.com</p>
+                    <p>商务合作：不支持</p>
+                </div>
+                <div class="footer-column">
+                    <h4>加入社区</h4>
+                    <p>加入我们的社区，获取最新活动信息和游戏技巧</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-weixin"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-qq"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-bilibili"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 上“暗”电竞护航平台. </p>
+                <p style="margin-top: 10px;">本网页为基础网页</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 轮播图功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 轮播图控制
+            const carousel = document.querySelector('.carousel');
+            const dots = document.querySelectorAll('.carousel-dot');
+            let currentIndex = 0;
+            
+            function updateCarousel() {
+                carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+                
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentIndex);
+                });
+            }
+            
+            dots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    currentIndex = parseInt(this.getAttribute('data-index'));
+                    updateCarousel();
+                });
+            });
+            
+            // 自动轮播
+                        setInterval(() => {
+                currentIndex = (currentIndex + 1) % dots.length;
+                updateCarousel();
+            }, 5000);
+            
+            // 弹窗控制
+            const joinQueueBtn = document.getElementById('joinQueueBtn');
+            const guardTypeModal = document.getElementById('guardTypeModal');
+            const infoModal = document.getElementById('infoModal');
+            const successModal = document.getElementById('successModal');
+            const closeButtons = document.querySelectorAll('.close-modal');
+            const optionButtons = document.querySelectorAll('.option-btn');
+            const submitBtn = document.getElementById('submitBtn');
+            let selectedType = '';
+            
+            joinQueueBtn.addEventListener('click', () => {
+                guardTypeModal.style.display = 'flex';
+            });
+            
+            closeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    guardTypeModal.style.display = 'none';
+                    infoModal.style.display = 'none';
+                    successModal.style.display = 'none';
+                });
+            });
+            
+            optionButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    selectedType = button.getAttribute('data-type');
+                    
+                    // 移除所有active类
+                    optionButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // 添加active类到当前按钮
+                    button.classList.add('active');
+                    
+                    // 短暂延迟后打开信息弹窗
+                    setTimeout(() => {
+                        guardTypeModal.style.display = 'none';
+                        infoModal.style.display = 'flex';
+                    }, 300);
+                });
+            });
+            
+            submitBtn.addEventListener('click', () => {
+                const gameName = document.getElementById('gameName').value;
+                const gameId = document.getElementById('gameId').value;
+                
+                if (!gameName || !gameId) {
+                    alert('请填写完整的游戏昵称和游戏编号！');
+                    return;
+                }
+                
+                // 生成随机排队号
+                const randomNum = Math.floor(Math.random() * 900) + 100;
+                const queueNumber = `#DT${new Date().getFullYear()}${(new Date().getMonth()+1).toString().padStart(2, '0')}${new Date().getDate().toString().padStart(2, '0')}${randomNum}`;
+                document.getElementById('queueNumber').textContent = queueNumber;
+                
+                infoModal.style.display = 'none';
+                successModal.style.display = 'flex';
+                
+                // 在实际应用中，这里应该将数据发送到服务器
+                console.log(`报名信息: 类型=${selectedType}, 昵称=${gameName}, ID=${gameId}, 排队号=${queueNumber}`);
+            });
+            
+            // 点击模态框外部关闭
+            window.addEventListener('click', (event) => {
+                if (event.target === guardTypeModal) {
+                    guardTypeModal.style.display = 'none';
+                }
+                if (event.target === infoModal) {
+                    infoModal.style.display = 'none';
+                }
+                if (event.target === successModal) {
+                    successModal.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
